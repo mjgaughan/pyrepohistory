@@ -8,6 +8,8 @@ def commit_analysis(repo):
             'commit_hash': commit.hexsha,
             'author_name': commit.author.name,
             'author_email': commit.author.email,
+            'committer_name': commit.committer.name,
+            'committer_email': commit.committer.email,
             'date': commit.committed_datetime,
             'message': commit.message,
             'is_merge': len(commit.parents) > 1
@@ -17,7 +19,8 @@ def commit_analysis(repo):
         #diff information
         diffs = commit.diff(commit.parents[0] if commit.parents else git.NULL_TREE, create_patch=True)
         commit_info['diff_info'] = diff_analysis(diffs)
-        print(commit_info)
+        #print(commit_info)
+        return commit_info
 
 def diff_analysis(diffs):
     diff_objects = []
