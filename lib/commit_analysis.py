@@ -1,6 +1,7 @@
 import git 
 import os
 import shutil
+import primary_language
 
 def commit_analysis(repo):
     for commit in repo.iter_commits():
