@@ -9,7 +9,8 @@ def commit_analysis(repo):
             'author_name': commit.author.name,
             'author_email': commit.author.email,
             'date': commit.committed_datetime,
-            'message': commit.message
+            'message': commit.message,
+            'is_merge': len(commit.parents) > 1
         }
         # some more effort to get this information
         commit_info['branches'] = repo.git.branch("--contains", commit_info['commit_hash'])
@@ -22,9 +23,15 @@ def diff_analysis(diffs):
     diff_objects = []
     for diff in diffs:
         diff_info = {
-            'lines_added' : diff.diff.decode("utf-8").count('\n+'),
-            'lines_deleted' : diff.diff.decode("utf-8").count('\n-'), 
-            'file' : diff.b_path,
+            'lines_added': sum(1 for line in diff.diff.decode('utf-8').split('\n') if line.startswith('+') and not line.startswith('+++')),
+            'lines_deleted': sum(1 for line in diff.diff.decode('utf-8').split('\n') if line.startswith('-') and not line.startswith('---')),
+            'parent_filepath': diff.a_path,  
+            'child_filepath': diff.b_path, 
+            'change_type': diff.change_type,  
+            'new_file': diff.new_file,  
+            'deleted_file': diff.deleted_file, 
+            'renamed_file': diff.renamed  
+            #'diff': diff.diff.decode('utf-8')  
         }
         diff_objects.append(diff_info)
     return diff_objects
