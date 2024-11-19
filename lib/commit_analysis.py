@@ -3,15 +3,20 @@ import os
 import shutil
 import primary_language
 
-def commit_analysis(repo):
+def commit_analysis(repo, cutoff_date):
+    commits_info = []
     for commit in repo.iter_commits():
+        # if too far back, break 
+        if commit.committed_datetime < cutoff_date:
+            break
         commit_info = {
             'commit_hash': commit.hexsha,
             'author_name': commit.author.name,
             'author_email': commit.author.email,
+            'authored_date': commit.authored_datetime,
             'committer_name': commit.committer.name,
             'committer_email': commit.committer.email,
-            'date': commit.committed_datetime,
+            'commit_date': commit.committed_datetime,
             'message': commit.message,
             'is_merge': len(commit.parents) > 1
         }
@@ -21,7 +26,8 @@ def commit_analysis(repo):
         diffs = commit.diff(commit.parents[0] if commit.parents else git.NULL_TREE, create_patch=True)
         commit_info['diff_info'] = diff_analysis(diffs)
         #print(commit_info)
-        return commit_info
+        commits_info.append(commit_info)
+    return commits_info
 
 def diff_analysis(diffs):
     diff_objects = []
