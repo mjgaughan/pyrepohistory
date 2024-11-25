@@ -3,10 +3,13 @@ import os
 import shutil
 import primary_language
 
-def commit_analysis(repo, cutoff_date):
+# parses through commits in reverse chronological order, hence the flipping of the terms for the arguments
+def commit_analysis(repo, cutoff_date, start_date):
     commits_info = []
     for commit in repo.iter_commits():
         # if too far back, break 
+        if commit.committed_datetime > start_date:
+            continue
         if commit.committed_datetime < cutoff_date:
             break
         commit_info = {
