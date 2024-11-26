@@ -32,7 +32,7 @@ def repo_lifecycle(vcs_link, clone_location, from_date, to_date, to_save=False, 
 
         if to_save:
             _commit = commits_df.iloc[0].to_dict()
-            temp_repo_path = checkout_version(project_owner, project_name, _commit, temp_repo, temp_repo_path)
+            temp_repo_path = checkout_version(project_owner, project_name, _commit, temp_repo_path)
             print(temp_repo_path)
 
             # program/code analysis of the project at a specific point in time
@@ -44,18 +44,18 @@ def repo_lifecycle(vcs_link, clone_location, from_date, to_date, to_save=False, 
     #clean up
     finally:
         if not to_save:
-            delete = cloning.delete_clone(temp_repo_path)
+            cloning.delete_clone(temp_repo_path)
 
-def checkout_version(project_owner, project_name, commit, repo, repo_path):
+def checkout_version(project_owner, project_name, commit, repo_path):
     #update the repo with the correct checkout
     subprocess.run(['git', 'checkout', commit['commit_hash']], cwd=repo_path, check=True)
-    new_repo_path = f"{commit['commit_date'].strftime('%Y-%m-%d')}_{project_owner}_{project_name}_{commit['commit_hash']}"
+    new_repo_path = "/".join(repo_path.split("/")[:-1]) + f"{commit['commit_date'].strftime('%Y-%m-%d')}_{project_owner}_{project_name}_{commit['commit_hash']}"
     os.rename(repo_path, new_repo_path)
     return new_repo_path
 
 if __name__ == "__main__":
     #setting the defaults for the test run
-    location = "tmp/"
+    location = "tmp/new/"
     parser = argparse.ArgumentParser(description="repository search")
     parser.add_argument("repolink", help="The repository hosting")
     args = parser.parse_args()
@@ -63,4 +63,4 @@ if __name__ == "__main__":
     from_date = datetime.datetime(2024, 11, 10, 1, 52, 32, tzinfo=cst)
     to_date = datetime.datetime(2024, 11, 20, 1, 52, 32, tzinfo=cst)
     #getting the information for the search
-    repo_lifecycle(args.repolink, location, from_date, to_date)
+    repo_lifecycle(args.repolink, location, from_date, to_date, True, False)
