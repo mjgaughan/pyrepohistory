@@ -2,8 +2,7 @@ import git
 import os
 import shutil
 
-def temp_clone(vcs_link):
-    temp_location = "tmp/"
+def temp_clone(vcs_link, temp_location):
     os.makedirs(temp_location)
     repo_path = temp_location
     repo = git.Repo.clone_from(vcs_link, repo_path)
