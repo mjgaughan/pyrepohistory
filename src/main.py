@@ -80,4 +80,4 @@ if __name__ == "__main__":
     from_date = datetime.datetime(2024, 11, 10, 1, 52, 32, tzinfo=cst)
     to_date = datetime.datetime(2024, 11, 20, 1, 52, 32, tzinfo=cst)
     # getting the information for the search
-    repo_lifecycle(args.repolink, location, from_date, to_date, True, False)
+    repo_lifecycle(args.repolink, location, from_date, to_date)

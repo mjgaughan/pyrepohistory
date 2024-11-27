@@ -25,6 +25,9 @@ def commit_analysis(repo, cutoff_date, start_date):
             "message": commit.message,
             "is_merge": len(commit.parents) > 1,
         }
+        # author/committer org information 
+        commit_info['author_org'] = commit_info["author_email"].split("@")[-1].split(".")[0]
+        commit_info['committer_org'] = commit_info["committer_email"].split("@")[-1].split(".")[0]
         # some more effort to get this information
         commit_info["branches"] = repo.git.branch(
             "--contains", commit_info["commit_hash"]
