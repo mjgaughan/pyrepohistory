@@ -5,4 +5,7 @@ there are other vcs analysis tools. this is indended to be:
 - support longitudinal data collection out of the box 
 
 installation:
-```pip install repo_lifecycles```
+
+```
+pip install repo_lifecycles
+```
