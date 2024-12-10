@@ -2,8 +2,9 @@ import argparse
 import sys
 import os
 import datetime
-import pandas as pd
 import subprocess
+
+import pandas as pd
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "lib")))
 from lib import cloning, commit_analysis
@@ -14,7 +15,7 @@ def repo_lifecycle(
     vcs_link, clone_location, from_date, to_date, to_save=False, to_csv=True
 ):
     """
-    Parameters:
+    ARGS
         vcs_link (str): Version control system link of the repository.
         from_date (datetime): The start date for commit analysis.
         to_date (datetime): The end date for commit analysis.
@@ -58,6 +59,16 @@ def repo_lifecycle(
 
 
 def checkout_version(project_owner, project_name, commit, repo_path):
+    """
+    ARGS
+    project_owner : the entity that owns the git repo 
+    project_name : the name of the git repo 
+    commit : the commit object to checkout from 
+    repo_path : the filepath of the cloned repo 
+
+    RETURNS
+    new_repo_path : the updated filepath of the checked-out repo 
+    """
     # update the repo with the correct checkout
     subprocess.run(
         ["git", "checkout", commit["commit_hash"]], cwd=repo_path, check=True
@@ -72,7 +83,7 @@ def checkout_version(project_owner, project_name, commit, repo_path):
 
 if __name__ == "__main__":
     # setting the defaults for the test run
-    location = "tmp/new/"
+    LOCATION = "tmp/new/"
     parser = argparse.ArgumentParser(description="repository search")
     parser.add_argument("repolink", help="The repository hosting")
     args = parser.parse_args()
@@ -80,4 +91,4 @@ if __name__ == "__main__":
     from_date = datetime.datetime(2024, 1, 10, 1, 52, 32, tzinfo=cst)
     to_date = datetime.datetime(2024, 11, 20, 1, 52, 32, tzinfo=cst)
     # getting the information for the search
-    repo_lifecycle(args.repolink, location, from_date, to_date)
+    repo_lifecycle(args.repolink, LOCATION, from_date, to_date)
