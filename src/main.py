@@ -10,7 +10,6 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "lib")))
 from lib import cloning, commit_analysis
 from lib import primary_language as pl
 
-
 def repo_lifecycle(
     vcs_link, clone_location, from_date, to_date, to_save=False, to_csv=True
 ):
@@ -45,10 +44,12 @@ def repo_lifecycle(
             print(temp_repo_path)
 
             # program/code analysis of the project at a specific point in time
-            language_breakdown = pl.language_sizes(
+            '''
+             language_breakdown = pl.language_sizes(
                 temp_repo_path
             )  # breakdown is in terms of LoC
             print(language_breakdown)
+            '''
             # TODO: here goes the linter/analysis implementation
     except Exception as e:
         print(f"An error occurred: {e}")
@@ -88,7 +89,7 @@ if __name__ == "__main__":
     parser.add_argument("repolink", help="The repository hosting")
     args = parser.parse_args()
     cst = datetime.timezone(datetime.timedelta(hours=-6))
-    from_date = datetime.datetime(2024, 1, 10, 1, 52, 32, tzinfo=cst)
+    from_date = datetime.datetime(2024, 10, 10, 1, 52, 32, tzinfo=cst)
     to_date = datetime.datetime(2024, 11, 20, 1, 52, 32, tzinfo=cst)
     # getting the information for the search
-    repo_lifecycle(args.repolink, LOCATION, from_date, to_date)
+    repo_lifecycle(args.repolink, LOCATION, from_date, to_date, to_save=True)
