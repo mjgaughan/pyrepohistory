@@ -3,8 +3,8 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "repo-lifecycles"
-version = "0.0.4"
+name = "pyrepohistory"
+version = "0.0.1"
 dependencies = [
   "pandas",
   "gitpython"
