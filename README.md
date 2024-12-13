@@ -7,5 +7,5 @@ there are other vcs analysis tools. this is indended to be:
 installation:
 
 ```
-pip install repo_lifecycles
+pip install pyrepohistory
 ```

@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "pyrepohistory"
-version = "0.0.1"
+version = "0.0.7"
 dependencies = [
   "pandas",
   "gitpython"
