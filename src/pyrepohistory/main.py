@@ -7,8 +7,9 @@ import subprocess
 import pandas as pd
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "lib")))
-from lib import cloning, commit_analysis
-from lib import primary_language as pl
+from cloning import temp_clone, delete_clone
+from commit_analysis import commit_analysis
+#from lib import primary_language as pl
 
 def repo_lifecycle(
     vcs_link, clone_location, from_date, to_date, to_save=False, to_csv=True
@@ -23,12 +24,12 @@ def repo_lifecycle(
     """
     try:
         # download the repository
-        temp_repo, temp_repo_path = cloning.temp_clone(vcs_link, clone_location)
+        temp_repo, temp_repo_path = temp_clone(vcs_link, clone_location)
         project_name = vcs_link.split("/")[-1]
         project_owner = vcs_link.split("/")[-2]
 
         # collect data on prior commits
-        commits_array = commit_analysis.commit_analysis(temp_repo, from_date, to_date)
+        commits_array = commit_analysis(temp_repo, from_date, to_date)
         commits_df = pd.DataFrame.from_records(commits_array)
         if to_csv:
             commits_df.to_csv(
@@ -56,7 +57,7 @@ def repo_lifecycle(
     # clean up
     finally:
         if not to_save:
-            cloning.delete_clone(temp_repo_path)
+            delete_clone(temp_repo_path)
 
 
 def checkout_version(project_owner, project_name, commit, repo_path):

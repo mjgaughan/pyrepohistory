@@ -3,7 +3,6 @@ import os
 import shutil
 import primary_language
 
-
 # parses through commits in reverse chronological order, hence the flipping of the terms for the arguments
 def commit_analysis(repo, cutoff_date, start_date):
     print("Analyzing Commits...")
