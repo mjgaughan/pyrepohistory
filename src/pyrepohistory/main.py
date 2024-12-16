@@ -6,9 +6,9 @@ import subprocess
 
 import pandas as pd
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "lib")))
-from cloning import temp_clone, delete_clone
-from commit_analysis import commit_analysis
+#sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "lib")))
+from pyrepohistory.lib.cloning import temp_clone, delete_clone
+from pyrepohistory.lib.commit_analysis import commit_analysis
 #from lib import primary_language as pl
 
 def repo_lifecycle(
