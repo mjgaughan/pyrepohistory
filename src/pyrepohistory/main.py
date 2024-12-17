@@ -94,7 +94,7 @@ if __name__ == "__main__":
     parser.add_argument("repolink", help="The repository hosting")
     args = parser.parse_args()
     cst = datetime.timezone(datetime.timedelta(hours=-6))
-    from_date = datetime.datetime(2024, 10, 10, 1, 52, 32, tzinfo=cst)
-    to_date = datetime.datetime(2024, 11, 20, 1, 52, 32, tzinfo=cst)
+    from_date = datetime.datetime(2013, 5, 1, 00,00,00, tzinfo=cst)
+    to_date = datetime.datetime(2013, 10, 10, 00, 00, 00, tzinfo=cst)
     # getting the information for the search
-    repo_lifecycle(args.repolink, LOCATION, from_date, to_date, to_save=True)
+    repo_lifecycle(args.repolink, LOCATION, from_date, to_date)

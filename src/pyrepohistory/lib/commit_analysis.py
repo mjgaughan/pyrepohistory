@@ -47,12 +47,12 @@ def diff_analysis(diffs):
         diff_info = {
             "lines_added": sum(
                 1
-                for line in diff.diff.decode("utf-8").split("\n")
+                for line in diff.diff.decode("utf-8", errors="ignore").split("\n")
                 if line.startswith("+") and not line.startswith("+++")
             ),
             "lines_deleted": sum(
                 1
-                for line in diff.diff.decode("utf-8").split("\n")
+                for line in diff.diff.decode("utf-8", errors="ignore").split("\n")
                 if line.startswith("-") and not line.startswith("---")
             ),
             "parent_filepath": diff.a_path,
