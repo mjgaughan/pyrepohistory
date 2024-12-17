@@ -12,15 +12,17 @@ from pyrepohistory.lib.commit_analysis import commit_analysis
 #from lib import primary_language as pl
 
 def repo_lifecycle(
-    vcs_link, clone_location, from_date, to_date, to_save=False, to_csv=True
+    vcs_link, clone_location, from_date, to_date, to_save=False, to_csv=True, csv_loc_prefix=""
 ):
     """
     ARGS
         vcs_link (str): Version control system link of the repository.
+        clone_location (str): The location of the temporary (or permanent) repo clone
         from_date (datetime): The start date for commit analysis.
         to_date (datetime): The end date for commit analysis.
         to_save (boolean): whether to save the project repository at the to_date; default FALSE
         to_csv (boolean): whether to save the commit information in a csv; default TRUE
+        csv_loc_prefix (str): optional default for specifying where the output csv file is saved; defuault current directory
     """
     try:
         # download the repository
@@ -32,8 +34,10 @@ def repo_lifecycle(
         commits_array = commit_analysis(temp_repo, from_date, to_date)
         commits_df = pd.DataFrame.from_records(commits_array)
         if to_csv:
+            if csv_loc_prefix != "" and csv_loc_prefix[-1] != "/":
+                csv_loc_prefix = csv_loc_prefix + "/"
             commits_df.to_csv(
-                f"{project_owner}_{project_name}_{from_date.strftime('%Y-%m-%d')}_to_{to_date.strftime('%Y-%m-%d')}.csv",
+                f"{csv_loc_prefix}{project_name}_{from_date.strftime('%Y-%m-%d')}_to_{to_date.strftime('%Y-%m-%d')}.csv",
                 index=False,
             )
 
