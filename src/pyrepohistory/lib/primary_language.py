@@ -2,7 +2,6 @@ import os
 import json
 from collections import defaultdict
 
-
 def language_sizes(repo_path):
     json_file_path = os.path.join(
         os.path.dirname(__file__), "resources", "file_extensions.json"
